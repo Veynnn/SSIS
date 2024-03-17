@@ -58,7 +58,7 @@ def add_student(courses, std_id, last_name, first_name, middle_name, year, gende
             else:
                     status = "Not Enrolled"
             
-            #open in append and write student data
+            #write student data
             with open(csv_file_path_students, mode='a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow([std_id, last_name, first_name, middle_name, year, gender,course_code])
@@ -84,10 +84,7 @@ def sort_student_data(csv_file_path_students: str):
             print("Data length before sorting:", len(data))  
             
             # sort data by id no.
-            data.sort(key=lambda x: int(x[0]) if x[0].isdigit() else x[0]) 
-            
-            # modify header for guide
-            header = ["ID", "Name", "Year", "Course", "Gender", "Course Code"]
+            data.sort(key=lambda x: x[0])
             data.insert(0, header) 
 
         # write sorted data back to csv
