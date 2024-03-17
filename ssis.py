@@ -182,7 +182,7 @@ def add_student_window(courses):
 
     #entry fields for the input
     entry_positions = [
-        (23, 96), (23, 185), (292, 185), (561, 185), (75, 276), (440, 329)  # Added position for the Course Code entry field
+        (23, 96), (23, 185), (292, 185), (561, 185), (75, 276), (40, 350) # Added position for the Course Code entry field
     ]
 
     entry_fields = []
