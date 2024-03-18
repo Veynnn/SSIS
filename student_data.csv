@@ -1,5 +1,4 @@
-ID,Name,Year,Course,Gender,Course Code
-2000-8765, Jackson,Michael,David, 2, Male, BTVTED-DT
+ID,SURNAME,FIRSTNAME,MIDDLENAME,YEAR,GENDER,COURSECODE
 2000-9876, Lim,Wei,Tan, 3, Female, BSCS
 2001-2345, Nguyen,Quang,Minh, 4, Male, BSPSYCH
 2001-4321, Singh,Sandeep,Kumar, 3, Male, BSCS
