@@ -58,6 +58,12 @@ def add_student(courses, std_id, last_name, first_name, middle_name, year, gende
             else:
                     status = "Not Enrolled"
             
+            with open(csv_file_path_students, mode='r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row and row[0] == std_id:
+                        return "ID number already Exists, student not added"  # ID number exist
+
             #write student data
             with open(csv_file_path_students, mode='a', newline='') as file:
                 writer = csv.writer(file)
@@ -390,6 +396,7 @@ def courses_window(courses, csv_file_path_courses):
     try:
         for code, name in courses.items():
             tree.insert("", tk.END, values=(code, name))
+
     except FileNotFoundError:
         messagebox.showerror("Error", "Could not find or open 'student_courses.csv' file.")
 
