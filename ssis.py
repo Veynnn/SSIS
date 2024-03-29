@@ -375,7 +375,17 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
 
 
 def courses_window(courses, csv_file_path_courses):
-    #create window for available courses
+
+    def add_course_window():
+        def add_course():
+            course_code = course_code_entry.get().strip()
+            course_name = course_name_entry.get().strip()
+
+            if course_code in courses:
+                messagebox.showerror("Error",f"Course with code {course_code} already exists.")
+                return
+
+    #create window for courses
     courses_window = tk.Tk()
     courses_window.geometry("300x400")
     courses_window.title("Courses")
