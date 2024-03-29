@@ -417,6 +417,30 @@ def courses_window(courses, csv_file_path_courses):
         add_button = tk.Button(add_course_window, text="Add", command=add_course)
         add_button.grid(row=2, columnspan=2, pady=10)
 
+    def edit_course_window ():
+        selected_item = tree.selection()
+
+    def remove_course():
+        selected_item = tree.selection()
+        if selected_item:
+            try:
+                index = int(tree.index(selected_item[0]))  # get index of the selected item
+                if 0 <= index < len(courses):
+                    del courses[list(courses.keys())[index]]  # delete course from dictionary
+                    tree.delete(selected_item)  # delete course from treeview
+                    with open(csv_file_path_courses, 'w', newline='') as file:
+                        writer = csv.writer(file)
+                        writer.writerow(["Course Code", "Course Name"])
+                        for course in courses.values():
+                            writer.writerow(course)
+                else:
+                    messagebox.showerror("Error", "Invalid index.")
+            except ValueError:
+                messagebox.showerror("Error", "Invalid selection.")
+        else:
+            messagebox.showerror("Error", "No course selected.")
+  
+        
     #create window for courses
     courses_window = tk.Tk()
     courses_window.geometry("300x400")
@@ -444,6 +468,9 @@ def courses_window(courses, csv_file_path_courses):
 
     add_button = tk.Button(frame,text="Add", font=("Montserrat",10), bg="#1a1515", fg="#FFFFFF", bd=0, command=add_course_window)
     add_button.pack(side=tk.LEFT, padx=5)
+
+    remove_button = tk.Button(frame, text="Remove", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=remove_course)
+    remove_button.pack(side=tk.LEFT, padx=5)
 
     courses_window.mainloop()
 
