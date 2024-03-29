@@ -384,6 +384,38 @@ def courses_window(courses, csv_file_path_courses):
             if course_code in courses:
                 messagebox.showerror("Error",f"Course with code {course_code} already exists.")
                 return
+            
+            if course_code and course_name:
+                courses[course_code] = [course_code, course_name]
+
+                with open(csv_file_path_courses, 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([course_code, course_name])
+
+                messagebox.showinfo("Success", "Course added successfully.")
+                add_course_window.destroy()
+                courses_window.destroy()
+                courses_window(courses, csv_file_path_courses)
+            else:
+                messagebox.showerror("Error", "Please enter both Course Code and Course Name")
+
+        add_course_window = tk.Toplevel()
+        add_course_window.geometry("300x200")
+        add_course_window.title("Add Course")
+        add_course_window.resizable(False, False)
+
+        course_code_label = tk.Label(add_course_window, text="Course Code:")
+        course_code_label.grid(row=0, column=0, padx=5, pady=5)
+        course_code_entry = tk.Entry(add_course_window)
+        course_code_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        course_name_label = tk.Label(add_course_window, text="Course Name:")
+        course_name_label.grid(row=1, column=0, padx=5, pady=5)
+        course_name_entry = tk.Entry(add_course_window)
+        course_name_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        add_button = tk.Button(add_course_window, text="Add", command=add_course)
+        add_button.grid(row=2, columnspan=2, pady=10)
 
     #create window for courses
     courses_window = tk.Tk()
@@ -409,6 +441,9 @@ def courses_window(courses, csv_file_path_courses):
 
     except FileNotFoundError:
         messagebox.showerror("Error", "Could not find or open 'student_courses.csv' file.")
+
+    add_button = tk.Button(frame,text="Add", font=("Montserrat",10), bg="#1a1515", fg="#FFFFFF", bd=0, command=add_course_window)
+    add_button.pack(side=tk.LEFT, padx=5)
 
     courses_window.mainloop()
 
