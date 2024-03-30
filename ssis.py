@@ -232,10 +232,38 @@ def add_student_window(courses):
     add_student_window.mainloop()
 
 def student_list_window(students, csv_file_path_students):
+    def search_students():
+        query = search_entry.get().lower()
+        if not query:
+            populate_student_list(students)
+            return
+        filtered_students = [student for student in student if any (query in str(attr).lower()for attr in student)]
+        populate_student_list(filtered_students)
+    
+    def populate_student_list(student_data)
+        
+        for record in tree.get_children():
+            tree.delete(record)
+        
+        for student in student_data:
+            tree.insert("","end", values=student)
+
     #new window for the student list
     student_list_window = tk.Tk()
     student_list_window.geometry("2000x700")
     student_list_window.title("Student List")
+
+    search_frame = tk.Frame(student_list_window, bg="#800000")
+    search_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+
+    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#800000", fg="white")
+    search_label.pack(side=tk.LEFT)
+
+    search_entry = tk.Entry(search_frame, font=("Montserrat", 10), width=50)
+    search_entry.pack(side=tk.LEFT, padx=5)
+
+    search_button = tk.Button(search_frame, text="Search", font=("Montserrat", 10), command=search_students )
+    search_button.pack(side=tk.LEFT, padx=5)
 
     frame = tk.Frame(student_list_window, width=400, height=300)
     frame.pack(fill=tk.BOTH, expand=True)
@@ -255,6 +283,8 @@ def student_list_window(students, csv_file_path_students):
     tree.heading("Year Level", text="Year Level")
     tree.heading("Gender", text="Gender")
     tree.heading("Course Code", text="Course Code")
+
+    populate_student_list(students)
 
     try:
         for i, student in enumerate(students): #for every student insert a row in the treeview
