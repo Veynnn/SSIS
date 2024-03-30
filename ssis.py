@@ -348,7 +348,7 @@ def student_list_window(students, csv_file_path_students):
         selected_item = tree.selection()
         if selected_item:
             try:
-                index = int(selected_item[0])  # get index of the selected item
+                index = int(tree.index(selected_item[0]))  # get index of the selected item
                 if 0 <= index < len(students):
                     print("Selected index:", index)  # print the selected index for debugging
                     edit_student_window(index, students, csv_file_path_students, student_list_window)
@@ -364,12 +364,10 @@ def student_list_window(students, csv_file_path_students):
     edit_button = tk.Button(frame, text="Edit", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=edit_student)
     edit_button.pack(side=tk.LEFT, padx=5)
 
-    student_list_window.mainloop()
-
 
 def edit_student_window(index, students, csv_file_path_students, previous_window=None):
     #function to save changes made sa edit student window
-    def save_changes():
+    def save_student_changes():
         try:
             #check if index is in valid range
             if 0 <= index < len(students):
@@ -425,12 +423,16 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     ]
 
     entry_fields = []
-    for (x, y), value in zip(entry_positions, students[index]):
+    for i, (x, y) in enumerate(entry_positions):
         entry = tk.Entry(frame, font=("Montserrat", 10), bg="#D9D9D9")
-        entry.insert(0, value)
+        if i == 0:
+            entry.insert(0, students[index][i])
+            entry.config(state='readonly')
+        else:
+            entry.insert(0, students[index][i])
         entry.place(x=x, y=y, width=249)
         entry_fields.append(entry)
-
+        
     gender_options = ["Female", "Male", "Others"]
     gender_var = tk.StringVar(edit_student_window)
     gender_var.set(students[index][5])  
@@ -449,7 +451,7 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     course_code_entry.insert(0, students[index][6])  
     course_code_entry.place(x=36, y=360, width=249)
 
-    save_button = tk.Button(frame, text="Save Changes", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=save_changes)
+    save_button = tk.Button(frame, text="Save Changes", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=save_student_changes)
     save_button.place(x=650, y=468, width=130, height=38)
 
     edit_student_window.mainloop()
