@@ -237,7 +237,7 @@ def student_list_window(students, csv_file_path_students):
         if not query:
             populate_student_list(students)
             return
-        filtered_students = [student for student in student if any (query in str(attr).lower()for attr in student)]
+        filtered_students = [student for student in students if any (query in str(attr).lower()for attr in student)]
         populate_student_list(filtered_students)
     
     def populate_student_list(student_data):
@@ -334,7 +334,7 @@ def student_list_window(students, csv_file_path_students):
 
     #edit button
     edit_button = tk.Button(frame, text="Edit", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=edit_student)
-    edit_button.pack(side=tk.BOTTOM)
+    edit_button.pack(side=tk.LEFT, padx=5)
 
     student_list_window.mainloop()
 
@@ -425,7 +425,6 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     save_button.place(x=650, y=468, width=130, height=38)
 
     edit_student_window.mainloop()
-
 
 def courses_window(courses, csv_file_path_courses):
 
@@ -544,7 +543,22 @@ def courses_window(courses, csv_file_path_courses):
                 messagebox.showerror("Error", "Invalid selection.")
         else:
             messagebox.showerror("Error", "No course selected.")
-  
+
+    def search_courses():
+        query = search_entry.get().lower()
+        if not query:
+            populate_course_list(courses)
+            return
+        filtered_courses = {code: name for code, name in courses.items() if query in code.lower() or query in name.lower()}
+        populate_course_list(filtered_courses)
+
+    def populate_course_list(course_data):
+        # Clear the treeview
+        for record in tree.get_children():
+            tree.delete(record)
+        # Insert course data into the treeview
+        for code, name in course_data.items():
+            tree.insert("", "end", values=(code, name))
         
     #create window for courses
     courses_window = tk.Tk()
@@ -557,6 +571,18 @@ def courses_window(courses, csv_file_path_courses):
     list_label = tk.Label(frame, text="Available Courses", font=("Montserrat", 12), bg="#800000", fg="#FFFFFF")
     list_label.pack(fill=tk.X)
 
+    search_frame = tk.Frame(frame, bg="#800000")
+    search_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+
+    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#800000", fg="white")
+    search_label.pack(side=tk.LEFT)
+
+    search_entry = tk.Entry(search_frame, font=("Montserrat", 10), width=50)
+    search_entry.pack(side=tk.LEFT, padx=5)
+
+    search_button = tk.Button(search_frame, text="Search", font=("Montserrat", 10), command=search_courses)
+    search_button.pack(side=tk.LEFT, padx=5)
+
     #treeview for the courses
     tree = ttk.Treeview(frame, columns=("Course Code", "Course Name"), show="headings")
     tree.pack(fill=tk.BOTH, expand=True)
@@ -564,12 +590,10 @@ def courses_window(courses, csv_file_path_courses):
     tree.heading("Course Code", text="Course Code")
     tree.heading("Course Name", text="Course Name")
 
-    try:
-        for code, name in courses.items():
-            tree.insert("", tk.END, values=(code, name))
-
-    except FileNotFoundError:
-        messagebox.showerror("Error", "Could not find or open 'student_courses.csv' file.")
+    populate_course_list(courses)
+    
+    for code, name in courses.items():
+        tree.insert("", tk.END, values=(code, name))
 
     add_button = tk.Button(frame,text="Add", font=("Montserrat",10), bg="#1a1515", fg="#FFFFFF", bd=0, command=add_course_window)
     add_button.pack(side=tk.LEFT, padx=5)
