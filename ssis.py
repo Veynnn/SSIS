@@ -417,9 +417,61 @@ def courses_window(courses, csv_file_path_courses):
         add_button = tk.Button(add_course_window, text="Add", command=add_course)
         add_button.grid(row=2, columnspan=2, pady=10)
 
-    def edit_course_window ():
+    def edit_course_window():
         selected_item = tree.selection()
+        if selected_item:
+            try
+                index = int(tree.inder(selected_item[0]))  # get selected item
+                if 0 <= index < len(courses):
+                    # new window 
+                    edit_window = tk.Toplevel()
+                    edit_window.geometry("300x200")
+                    edit_window.title("Edit Course")
+                    edit_window.resizable(False, False)
 
+                    course_code_label = tk.Label(edit_window, text="Course Code:")
+                    course_code_label.grid(row=0, column=0, padx=5, pady=5)
+                    course_code_entry = tk.Entry(edit_window)
+                    course_code_entry.grid(row=0, column=1, padx=5, pady=5)
+                    course_code_entry.insert(tk.END, list(courses.keys())[index])  # populate with selected course code
+
+                    course_name_label = tk.Label(edit_window, text="Course Name:")
+                    course_name_label.grid(row=1, column=0, padx=5, pady=5)
+                    course_name_entry = tk.Entry(edit_window)
+                    course_name_entry.grid(row=1, column=1, padx=5, pady=5)
+                    course_name_entry.insert(tk.END, courses[list(courses.keys())[index]])  # populate with selected course name
+
+
+                    def update_course():
+                        new_course_code = course_code_entry.get().strip()
+                        new_course_name = course_name_entry.get().strip()
+
+                        # update the course information in the dictionary
+                        courses[new_course_code] = new_course_name
+
+                        # update the treeview with the new information
+                        tree.item(selected_item, values=(new_course_code, new_course_name))
+
+                        # write the updated course information to the CSV file
+                        with open(csv_file_path_courses, 'w', newline='') as file:
+                            writer = csv.writer(file)
+                            writer.writerow(["Course Code", "Course Name"])
+                            for code, name in courses.items():
+                                writer.writerow([code, name])
+
+                        messagebox.showinfo("Success", "Course updated successfully.")
+                        edit_window.destroy()
+
+                    update_button = tk.Button(edit_window, text="Update", command=update_course)
+                    update_button.grid(row=2, columnspan=2, pady=10)
+                else:
+                    messagebox.showerror("Error", "Invalid index.")
+            except ValueError:
+                messagebox.showerror("Error", "Invalid selection.")
+        else:
+            messagebox.showerror("Error", "No course selected.")
+
+    
     def remove_course():
         selected_item = tree.selection()
         if selected_item:
@@ -468,6 +520,10 @@ def courses_window(courses, csv_file_path_courses):
 
     add_button = tk.Button(frame,text="Add", font=("Montserrat",10), bg="#1a1515", fg="#FFFFFF", bd=0, command=add_course_window)
     add_button.pack(side=tk.LEFT, padx=5)
+
+    edit_button = tk.Button(frame, text="Edit", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=edit_course_window)
+    edit_button.pack(side=tk.LEFT, padx=5)
+
 
     remove_button = tk.Button(frame, text="Remove", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=remove_course)
     remove_button.pack(side=tk.LEFT, padx=5)
