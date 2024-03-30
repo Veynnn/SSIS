@@ -420,8 +420,8 @@ def courses_window(courses, csv_file_path_courses):
     def edit_course_window():
         selected_item = tree.selection()
         if selected_item:
-            try
-                index = int(tree.inder(selected_item[0]))  # get selected item
+            try:
+                index = int(tree.index(selected_item[0]))  # get selected item
                 if 0 <= index < len(courses):
                     # new window 
                     edit_window = tk.Toplevel()
