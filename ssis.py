@@ -158,6 +158,53 @@ def main_window():
     main_window.mainloop()
 
 def add_student_window(courses):
+
+    def validate_year(year):
+        try:
+            year_int = int(year)
+            if 1 <= year_int <= 4:  
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
+    
+    def validate_id(std_id):
+        if len(std_id) != 9:  
+            return False
+        if not std_id[:4].isdigit() or not std_id[5:].isdigit():  
+            return False
+        if std_id[4] != '-':  
+            return False
+        return True
+
+    def save_student():
+        try:
+            student_id, last_name, first_name, middle_name, year, course_code = [entry.get() for entry in entry_fields[:6]]  
+            gender = gender_var.get()
+
+            if not validate_year(year):
+                messagebox.showerror("Error", "Invalid year level. Please enter a value from 1 to 4.")
+                return
+            
+            if not validate_id(student_id):
+                messagebox.showerror("Error", "Invalid student ID format. Please use the format 20XX-XXXX.")
+                return
+
+            # Get the current directory and path
+            current_directory = os.path.dirname(__file__)
+            csv_file_path_students = os.path.join(current_directory, 'student_data.csv')
+
+            # get the status
+            status = add_student(courses, student_id, last_name, first_name, middle_name, year, gender, course_code, csv_file_path_students)
+            messagebox.showinfo("Status", f"Student added. Status: {status}")  # Show status
+            add_student_window.destroy()
+            main_window()  # Refresh main window
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+  
+
     #create a new toplevel window for adding a student
     add_student_window = tk.Toplevel()  
     add_student_window.geometry("850x531")
@@ -205,25 +252,6 @@ def add_student_window(courses):
     gender_dropdown = tk.OptionMenu(frame, gender_var, *gender_options)
     gender_dropdown.config(font=("Montserrat", 10), bg="#D9D9D9", width=15)
     gender_dropdown.place(x=440, y=260)
-
-    #function to save student info
-    def save_student():
-        try:
-            #get the input values
-            student_id, last_name, first_name, middle_name, year, course_code = [entry.get() for entry in entry_fields[:6]]  # Updated to fetch 6 entries
-            gender = gender_var.get()
-
-            #get the current directory and path
-            current_directory = os.path.dirname(__file__)
-            csv_file_path_students = os.path.join(current_directory, 'student_data.csv')
-
-            # when adding a student get the status
-            status = add_student(courses, student_id, last_name, first_name, middle_name, year, gender, course_code, csv_file_path_students)
-            messagebox.showinfo("Status", f"Student added. Status: {status}")  # Show status
-            add_student_window.destroy()
-            main_window()  #refresh main window
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {e}")
 
     #save the student info and add it to csv
     save_button = tk.Button(frame, text="Save", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=save_student)
