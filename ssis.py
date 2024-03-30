@@ -122,7 +122,7 @@ def main_window():
     main_window.title("Main Menu")
     main_window.resizable(False, False)
 
-    frame = tk.Frame(main_window, width=933, height=531, bg="#800000")
+    frame = tk.Frame(main_window, width=933, height=531, bg="#A51D21")
     frame.pack_propagate(False)
     frame.pack()
     
@@ -139,7 +139,7 @@ def main_window():
         courses_window(courses, csv_file_path_courses)
 
     
-    welcome_label = tk.Label(frame, text="Welcome to Student Information System", font=("Montserrat", 13,"bold"),fg="#FFFFFF", bg="#800000")
+    welcome_label = tk.Label(frame, text="Welcome to Student Information System", font=("Montserrat", 13,"bold"),fg="#FFFFFF", bg="#A51D21")
     welcome_label.pack()
 
     #buttonz for the windowz
@@ -211,11 +211,11 @@ def add_student_window(courses):
     add_student_window.title("Add Student")
     add_student_window.resizable(False, False)
 
-    frame = tk.Frame(add_student_window, width=933, height=531, bg="#800000")
+    frame = tk.Frame(add_student_window, width=933, height=531, bg="#A51D21")
     frame.pack_propagate(False)
     frame.pack()
 
-    input_label = tk.Label(frame, text="Input Student Information", font=("Montserrat", 15,"bold"),fg="#FFFFFF", bg="#800000")
+    input_label = tk.Label(frame, text="Input Student Information", font=("Montserrat", 15,"bold"),fg="#FFFFFF", bg="#A51D21")
     input_label.pack()
     
     labels = [
@@ -227,7 +227,7 @@ def add_student_window(courses):
     ]
 
     for i, (label_text, (x, y)) in enumerate(zip(labels, label_positions)):
-        label = tk.Label(frame, text=label_text, font=("Montserrat", 10), bg="#800000", fg="white")
+        label = tk.Label(frame, text=label_text, font=("Montserrat", 10), bg="#A51D21", fg="white")
         label.place(x=x, y=y) 
 
     #entry fields for the input
@@ -246,7 +246,7 @@ def add_student_window(courses):
     gender_var = tk.StringVar(add_student_window)
     gender_var.set(gender_options[0])  
 
-    gender_label = tk.Label(frame, text="Gender", font=("Montserrat", 10), bg="#800000", fg="white")
+    gender_label = tk.Label(frame, text="Gender", font=("Montserrat", 10), bg="#A51D21", fg="white")
     gender_label.place(x=440, y=238)
 
     gender_dropdown = tk.OptionMenu(frame, gender_var, *gender_options)
@@ -281,10 +281,10 @@ def student_list_window(students, csv_file_path_students):
     student_list_window.geometry("2000x700")
     student_list_window.title("Student List")
 
-    search_frame = tk.Frame(student_list_window, bg="#800000")
+    search_frame = tk.Frame(student_list_window, bg="#A51D21")
     search_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
 
-    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#800000", fg="white")
+    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#A51D21", fg="white")
     search_label.pack(side=tk.LEFT)
 
     search_entry = tk.Entry(search_frame, font=("Montserrat", 10), width=50)
@@ -296,7 +296,7 @@ def student_list_window(students, csv_file_path_students):
     frame = tk.Frame(student_list_window, width=400, height=300)
     frame.pack(fill=tk.BOTH, expand=True)
 
-    list_label = tk.Label(frame, text="Student List", font=("Helvetica", 13),bg="#800000",fg="#FFFFFF")
+    list_label = tk.Label(frame, text="Student List", font=("Helvetica", 13),bg="#A51D21",fg="#FFFFFF")
     list_label.pack(fill=tk.X)
 
     #treeview widget to display data
@@ -364,7 +364,6 @@ def student_list_window(students, csv_file_path_students):
     edit_button = tk.Button(frame, text="Edit", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=edit_student)
     edit_button.pack(side=tk.LEFT, padx=5)
 
-
 def edit_student_window(index, students, csv_file_path_students, previous_window=None):
     #function to save changes made sa edit student window
     def save_student_changes():
@@ -399,11 +398,11 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     edit_student_window.title("Edit Student")
     edit_student_window.resizable(False, False)
 
-    frame = tk.Frame(edit_student_window, width=933, height=531, bg="#800000")
+    frame = tk.Frame(edit_student_window, width=933, height=531, bg="#A51D21")
     frame.pack_propagate(False)
     frame.pack()
 
-    input_label = tk.Label(frame, text="Edit Student Information", font=("Montserrat", 15,"bold"),fg="#FFFFFF", bg="#800000")
+    input_label = tk.Label(frame, text="Edit Student Information", font=("Montserrat", 15,"bold"),fg="#FFFFFF", bg="#A51D21")
     input_label.pack()
 
     labels = [
@@ -415,7 +414,7 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     ]
 
     for i, (label_text, (x, y)) in enumerate(zip(labels, label_positions)):
-        label = tk.Label(frame, text=label_text, font=("Montserrat", 10), bg="#800000", fg="white")
+        label = tk.Label(frame, text=label_text, font=("Montserrat", 10), bg="#A51D21", fg="white")
         label.place(x=x, y=y) 
 
     entry_positions = [
@@ -432,19 +431,19 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
             entry.insert(0, students[index][i])
         entry.place(x=x, y=y, width=249)
         entry_fields.append(entry)
-        
+
     gender_options = ["Female", "Male", "Others"]
     gender_var = tk.StringVar(edit_student_window)
     gender_var.set(students[index][5])  
 
-    gender_label = tk.Label(frame, text="Gender", font=("Montserrat", 10), bg="#800000", fg="white")
+    gender_label = tk.Label(frame, text="Gender", font=("Montserrat", 10), bg="#A51D21", fg="white")
     gender_label.place(x=440, y=243)
 
     gender_dropdown = tk.OptionMenu(frame, gender_var, *gender_options)
     gender_dropdown.config(font=("Montserrat", 10), bg="#D9D9D9", width=17)
     gender_dropdown.place(x=440, y=268)
 
-    course_code_label = tk.Label(frame, text="Course Code", font=("Montserrat", 10), bg="#800000", fg="white")
+    course_code_label = tk.Label(frame, text="Course Code", font=("Montserrat", 10), bg="#A51D21", fg="white")
     course_code_label.place(x=36, y=329)
 
     course_code_entry = tk.Entry(frame, font=("Montserrat", 10), bg="#D9D9D9")
@@ -482,18 +481,19 @@ def courses_window(courses, csv_file_path_courses):
                 messagebox.showerror("Error", "Please enter both Course Code and Course Name")
 
         add_course_window = tk.Toplevel()
-        add_course_window.geometry("300x200")
+        add_course_window.geometry("600x120")
         add_course_window.title("Add Course")
         add_course_window.resizable(False, False)
+        add_course_window.config(bg="#A51D21")
 
-        course_code_label = tk.Label(add_course_window, text="Course Code:")
+        course_code_label = tk.Label(add_course_window, text="Course Code:",font=("Montserrat",10),bg=("#A51D21"),fg=("#FFFFFF"))
         course_code_label.grid(row=0, column=0, padx=5, pady=5)
-        course_code_entry = tk.Entry(add_course_window)
+        course_code_entry = tk.Entry(add_course_window, width=80)
         course_code_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        course_name_label = tk.Label(add_course_window, text="Course Name:")
+        course_name_label = tk.Label(add_course_window, text="Course Name:",font=("Montserrat",10),bg=("#A51D21"),fg=("#FFFFFF"))
         course_name_label.grid(row=1, column=0, padx=5, pady=5)
-        course_name_entry = tk.Entry(add_course_window)
+        course_name_entry = tk.Entry(add_course_window,width=80)
         course_name_entry.grid(row=1, column=1, padx=5, pady=5)
 
         add_button = tk.Button(add_course_window, text="Add", command=add_course)
@@ -507,19 +507,20 @@ def courses_window(courses, csv_file_path_courses):
                 if 0 <= index < len(courses):
                     # new window 
                     edit_window = tk.Toplevel()
-                    edit_window.geometry("300x200")
+                    edit_window.geometry("600x150")
                     edit_window.title("Edit Course")
                     edit_window.resizable(False, False)
+                    edit_window.config(bg="#A51D21")
 
-                    course_code_label = tk.Label(edit_window, text="Course Code:")
+                    course_code_label = tk.Label(edit_window, text="Course Code:",font=("Montserrat",10),bg=("#A51D21"),fg=("#FFFFFF"))
                     course_code_label.grid(row=0, column=0, padx=5, pady=5)
-                    course_code_entry = tk.Entry(edit_window)
+                    course_code_entry = tk.Entry(edit_window, width=80)
                     course_code_entry.grid(row=0, column=1, padx=5, pady=5)
                     course_code_entry.insert(tk.END, list(courses.keys())[index])  # populate with selected course code
 
-                    course_name_label = tk.Label(edit_window, text="Course Name:")
+                    course_name_label = tk.Label(edit_window, text="Course Name:",)
                     course_name_label.grid(row=1, column=0, padx=5, pady=5)
-                    course_name_entry = tk.Entry(edit_window)
+                    course_name_entry = tk.Entry(edit_window, width=80)
                     course_name_entry.grid(row=1, column=1, padx=5, pady=5)
                     course_name_entry.insert(tk.END, courses[list(courses.keys())[index]])  # populate with selected course name
 
@@ -598,13 +599,13 @@ def courses_window(courses, csv_file_path_courses):
     frame = tk.Frame(courses_window, width=400, height=300)
     frame.pack(fill=tk.BOTH, expand=True)
 
-    list_label = tk.Label(frame, text="Available Courses", font=("Montserrat", 12), bg="#800000", fg="#FFFFFF")
+    list_label = tk.Label(frame, text="Available Courses", font=("Montserrat", 12), bg="#A51D21", fg="#FFFFFF")
     list_label.pack(fill=tk.X)
 
-    search_frame = tk.Frame(frame, bg="#800000")
+    search_frame = tk.Frame(frame, bg="#A51D21")
     search_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
 
-    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#800000", fg="white")
+    search_label = tk.Label(search_frame, text="Search:", font=("Montserrat", 10), bg="#A51D21", fg="white")
     search_label.pack(side=tk.LEFT)
 
     search_entry = tk.Entry(search_frame, font=("Montserrat", 10), width=50)
