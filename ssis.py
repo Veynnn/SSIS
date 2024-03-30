@@ -240,7 +240,7 @@ def student_list_window(students, csv_file_path_students):
         filtered_students = [student for student in student if any (query in str(attr).lower()for attr in student)]
         populate_student_list(filtered_students)
     
-    def populate_student_list(student_data)
+    def populate_student_list(student_data):
         
         for record in tree.get_children():
             tree.delete(record)
