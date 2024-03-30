@@ -262,6 +262,29 @@ def student_list_window(students, csv_file_path_students):
     except FileNotFoundError:
         messagebox.showerror("Error", "Could not find or open 'student_data.csv' file.")
 
+    def remove_student():
+        selected_item = tree.selection()
+        if selected_item:
+            try:
+                index = int(tree.index(selected_item[0]))  # get index of the selected item
+                if 0 <= index < len(students):
+                    del students[index]  # delete student from list
+                    tree.delete(selected_item)  # delete student from treeview
+                    with open(csv_file_path_students, 'w', newline='') as file:
+                        writer = csv.writer(file)
+                        writer.writerows(students)
+                else:
+                    messagebox.showerror("Error", "Invalid index.")
+            except ValueError:
+                messagebox.showerror("Error", "Invalid selection.")
+        else:
+            messagebox.showerror("Error", "No student selected.")
+
+    # Remove button
+    remove_button = tk.Button(frame, text="Remove", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=remove_student)
+    remove_button.pack(side=tk.LEFT, padx=5)
+
+
     #edit student info
     def edit_student():
         selected_item = tree.selection()
