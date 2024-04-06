@@ -1,4 +1,4 @@
-from curses import window
+
 import os
 import csv
 import tkinter as tk
