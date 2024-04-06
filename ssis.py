@@ -1,9 +1,11 @@
+from curses import window
 import os
 import csv
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import messagebox
 from tkinter import ttk
+from turtle import back
 
 
 class Student:
@@ -159,6 +161,10 @@ def main_window():
 
 def add_student_window(courses):
 
+    def back():
+        add_student_window.destroy()
+        main_window()
+
     def validate_year(year):
         try:
             year_int = int(year)
@@ -257,9 +263,16 @@ def add_student_window(courses):
     save_button = tk.Button(frame, text="Save", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=save_student)
     save_button.place(x=650, y=468, width=130, height=38)
 
+    back_button = tk.Button(frame, text="Back", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=back)
+    back_button.place(x=510, y=468, width=130, height=38)
+
     add_student_window.mainloop()
 
 def student_list_window(students, csv_file_path_students):
+    def back():
+        student_list_window.destroy()
+        main_window()
+
     def search_students():
         query = search_entry.get().lower()
         if not query:
@@ -364,8 +377,15 @@ def student_list_window(students, csv_file_path_students):
     edit_button = tk.Button(frame, text="Edit", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=edit_student)
     edit_button.pack(side=tk.LEFT, padx=5)
 
+    back_button = tk.Button(frame, text="Back", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=back)
+    back_button.pack(side=tk.LEFT, padx=5)
+
+
 def edit_student_window(index, students, csv_file_path_students, previous_window=None):
-    #function to save changes made sa edit student window
+    def back():
+        edit_student_window.destroy()
+        main_window()
+
     def save_student_changes():
         try:
             #check if index is in valid range
@@ -453,9 +473,16 @@ def edit_student_window(index, students, csv_file_path_students, previous_window
     save_button = tk.Button(frame, text="Save Changes", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=save_student_changes)
     save_button.place(x=650, y=468, width=130, height=38)
 
+    back_button = tk.Button(frame, text="Back", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=back)
+    back_button.place(x=510, y=468, width=130, height=38)
+
     edit_student_window.mainloop()
 
 def courses_window(courses, csv_file_path_courses):
+
+    def back ():
+        courses_window.destroy()
+        main_window()
 
     def add_course_window():
         def add_course():
@@ -500,6 +527,7 @@ def courses_window(courses, csv_file_path_courses):
         add_button.grid(row=2, columnspan=2, pady=10)
 
     def edit_course_window():
+     
         selected_item = tree.selection()
         if selected_item:
             try:
@@ -635,6 +663,9 @@ def courses_window(courses, csv_file_path_courses):
 
     remove_button = tk.Button(frame, text="Remove", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=remove_course)
     remove_button.pack(side=tk.LEFT, padx=5)
+
+    back_button = tk.Button(frame, text="Back", font=("Montserrat", 10), bg="#1A1515", fg="#FFFFFF", bd=0, command=back)
+    back_button.pack(side=tk.LEFT, padx=5) 
 
     courses_window.mainloop()
 
