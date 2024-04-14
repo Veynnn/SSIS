@@ -1,4 +1,3 @@
-
 import os
 import csv
 import tkinter as tk
@@ -589,13 +588,13 @@ def courses_window(courses, csv_file_path_courses):
             try:
                 index = int(tree.index(selected_item[0]))  # get index of the selected item
                 if 0 <= index < len(courses):
-                    del courses[list(courses.keys())[index]]  # delete course from dictionary
                     tree.delete(selected_item)  # delete course from treeview
                     with open(csv_file_path_courses, 'w', newline='') as file:
                         writer = csv.writer(file)
                         writer.writerow(["Course Code", "Course Name"])
                         for course in courses.values():
-                            writer.writerow(course)
+                            writer.writerow([code,course])
+                    del courses[list(courses.keys())[index]]                           
                 else:
                     messagebox.showerror("Error", "Invalid index.")
             except ValueError:
